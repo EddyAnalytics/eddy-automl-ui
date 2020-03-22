@@ -1,5 +1,7 @@
 # eddy-automl-ui
 
+User interface for the Eddy AutoML service. Used for scheduling, managing and monitoring AutoML jobs.
+
 ## Project setup
 ```
 yarn install
