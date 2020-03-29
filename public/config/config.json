@@ -1,0 +1,11 @@
+{
+    "debug": false,
+    "api": {
+        "url": "https://api.eddy-automl.eddy-analytics.org/api"
+    },
+    "graphql": {
+        "enabled": true,
+        "httpEndpoint": "https://api.eddy-automl.eddy-analytics.org/graphql",
+        "wsEndpoint": "wss://subscriptions.eddy-automl.eddy-analytics.org/subscriptions"
+    }
+}

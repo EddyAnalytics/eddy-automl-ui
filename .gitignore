@@ -23,3 +23,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+
+# Local overrides of the client side config.
+/public/config/development.json
