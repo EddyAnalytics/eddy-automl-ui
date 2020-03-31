@@ -34,7 +34,7 @@ export default class TopicsSelector extends Vue {
     }
 
     selectTopic(topic) {
-        this.$emit('select', topic);
+        this.$emit('input', topic);
     }
 }
 </script>
