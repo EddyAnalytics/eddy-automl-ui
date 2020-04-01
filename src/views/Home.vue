@@ -1,7 +1,10 @@
 <template>
     <div>
-        <topic-selector v-model="topic" />
-        <sample-events :topic="topic" />
+        <topic-selector v-model="inputTopic" label="Input topic" />
+        <b-field label="Output topic" expanded>
+            <b-input v-model="outputTopic" expanded></b-input>
+        </b-field>
+        <sample-events :topic="inputTopic" />
     </div>
 </template>
 
@@ -14,6 +17,7 @@ import SampleEvents from '@/components/SampleEvents.vue';
     components: { TopicSelector, SampleEvents }
 })
 export default class Home extends Vue {
-    topic = null;
+    inputTopic = '';
+    outputTopic = '';
 }
 </script>

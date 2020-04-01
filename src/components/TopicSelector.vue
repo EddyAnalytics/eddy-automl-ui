@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-field label="Topic">
+        <b-field :label="label">
             <b-autocomplete
                 v-model="topicAutocompleteModel"
                 open-on-focus
@@ -12,11 +12,12 @@
 </template>
 
 <script>
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import KAFKA_TOPICS from '@/graphql/subscriptions/kafkaTopics.gql';
 
 @Component()
 export default class TopicsSelector extends Vue {
+    @Prop() label;
     topics = [];
     topicAutocompleteModel = '';
     created() {
