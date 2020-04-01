@@ -5,6 +5,9 @@
             <b-input v-model="outputTopic" expanded></b-input>
         </b-field>
         <sample-events :topic="inputTopic" />
+        <b-field label="Target column index" expanded>
+            <b-numberinput v-model="targetColumnIndex" min="0"> </b-numberinput>
+        </b-field>
     </div>
 </template>
 
@@ -19,5 +22,6 @@ import SampleEvents from '@/components/SampleEvents.vue';
 export default class Home extends Vue {
     inputTopic = '';
     outputTopic = '';
+    targetColumnIndex = 0;
 }
 </script>

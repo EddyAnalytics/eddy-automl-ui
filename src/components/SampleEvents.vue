@@ -1,5 +1,6 @@
 <template>
     <div v-if="topic">
+        <strong>Sample events</strong>
         <div v-if="loading">
             Loading sample events...
         </div>
