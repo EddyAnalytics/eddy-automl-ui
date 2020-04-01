@@ -6,8 +6,17 @@
         </b-field>
         <sample-events :topic="inputTopic" />
         <b-field label="Target column index" expanded>
-            <b-numberinput v-model="targetColumnIndex" min="0"> </b-numberinput>
+            <b-numberinput v-model="targetColumnIndex" min="0"></b-numberinput>
         </b-field>
+        <b-button
+            type="is-primary"
+            class="is-pulled-right"
+            outlined
+            :loading="loading"
+            @click="deploy"
+        >
+            Deploy
+        </b-button>
     </div>
 </template>
 
@@ -23,5 +32,10 @@ export default class Home extends Vue {
     inputTopic = '';
     outputTopic = '';
     targetColumnIndex = 0;
+    loading = false;
+
+    deploy() {
+        // Perform GraphQL mutation
+    }
 }
 </script>

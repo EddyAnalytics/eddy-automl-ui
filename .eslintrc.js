@@ -14,7 +14,8 @@ module.exports = {
             'error',
             {
                 printWidth: 100,
-                singleQuote: true
+                singleQuote: true,
+                htmlWhitespaceSensitivity: 'ignore'
             }
         ]
     },
