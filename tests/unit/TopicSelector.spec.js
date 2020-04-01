@@ -10,13 +10,16 @@ describe('TopicSelector.vue', () => {
         const topics = ['topic_1', 'topic_2'];
         const wrapper = mount(TopicSelector, {
             localVue,
+            propsData: {
+                label: 'Input topic'
+            },
             data() {
                 return {
                     topics
                 };
             }
         });
-        expect(wrapper.text()).toContain('Topic');
+        expect(wrapper.text()).toContain('Input topic');
         expect(wrapper.text()).toContain(topics[0]);
         expect(wrapper.text()).toContain(topics[1]);
     });
