@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
+import store from '@/store';
 import router from './router';
 import { createProvider } from '@/services/graphql';
 import Buefy from 'buefy';
@@ -31,6 +32,7 @@ api.get('/config/' + configFileName).then(res => {
     new Vue({
         el: '#app',
         router,
+        store,
         apolloProvider: createProvider(apolloOptions),
         render: h => h(App)
     });
