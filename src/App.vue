@@ -1,6 +1,6 @@
 <template>
     <main class="main container">
-        <h1 class="title">Eddy AutoML</h1>
+        <h1 class="title m-t-md">Eddy AutoML</h1>
         <transition>
             <router-view></router-view>
         </transition>

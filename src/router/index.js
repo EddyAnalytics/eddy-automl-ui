@@ -1,14 +1,30 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '@/views/Home.vue';
+import Jobs from '@/views/Jobs.vue';
+import Job from '@/views/Job.vue';
+import NewJob from '@/views/NewJob.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
     {
         path: '/',
-        name: 'Home',
-        component: Home
+        redirect: '/jobs'
+    },
+    {
+        path: '/jobs',
+        name: 'Jobs',
+        component: Jobs
+    },
+    {
+        path: '/jobs/new',
+        name: 'NewJob',
+        component: NewJob
+    },
+    {
+        path: '/jobs/:jobId',
+        name: 'Job',
+        component: Job
     }
 ];
 
