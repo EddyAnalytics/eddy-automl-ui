@@ -1,5 +1,4 @@
-import { api } from '@/services/rest';
-import { apollo } from '@/services/graphql';
+import { authClient, onLogin, onLogout } from '@/services/graphql';
 import LOGIN_MUTATION from '@/graphql/mutations/login.gql';
 
 const namespace = 'auth/';
@@ -35,43 +34,30 @@ export default {
         }
     },
     actions: {
-        [AUTH.LOGIN]: ({ commit }, { email, password, useREST = false }) => {
-            if (useREST) {
-                return api.post('login', { email, password }).then(
-                    data => {
-                        commit(AUTH.SET_USER, {
-                            token: data.token,
-                            username: email
-                        });
-                    },
-                    error => {
-                        commit(AUTH.SET_USER, null);
-                        throw error;
+        [AUTH.LOGIN]: ({ commit }, { email, password }) => {
+            return authClient
+                .mutate({
+                    mutation: LOGIN_MUTATION,
+                    variables: {
+                        username: email,
+                        password: password
                     }
-                );
-            } else {
-                return apollo
-                    .mutate({
-                        mutation: LOGIN_MUTATION,
-                        variables: {
-                            username: email,
-                            password: password
-                        }
-                    })
-                    .then(res => {
-                        commit(AUTH.SET_USER, {
-                            token: res.data.tokenAuth.token,
-                            username: email
-                        });
-                    })
-                    .catch(error => {
-                        commit(AUTH.SET_USER, null);
-                        throw error;
+                })
+                .then(res => {
+                    onLogin();
+                    commit(AUTH.SET_USER, {
+                        token: res.data.tokenAuth.token,
+                        username: email
                     });
-            }
+                })
+                .catch(error => {
+                    commit(AUTH.SET_USER, null);
+                    throw error;
+                });
         },
         [AUTH.LOGOUT]: ({ commit }) => {
             commit(AUTH.SET_USER, null);
+            onLogout();
         }
     },
     getters: {

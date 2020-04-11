@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import store from '@/store';
 import router from './router';
+import { api } from '@/services/rest';
 import { createProvider } from '@/services/graphql';
 import Buefy from 'buefy';
 
@@ -11,8 +12,6 @@ Vue.use(Buefy);
 const configFileName =
     process.env.NODE_ENV === 'production' ? 'config.json' : process.env.NODE_ENV + '.json';
 
-import { api } from '@/services/rest';
-
 api.get('/config/' + configFileName).then(res => {
     const config = res.data;
     Vue.prototype.$config = {
@@ -20,20 +19,21 @@ api.get('/config/' + configFileName).then(res => {
         debug: config.debug || process.env.NODE_ENV === 'development'
     };
 
-    // Set the REST API default URL
-    api.defaults.baseURL = config.api.url;
+    // Set Apollo clients settings
+    const authClientOptions = {
+        httpEndpoint: config.authGraphQLClient.httpEndpoint
+    };
 
-    // Set Apollo client settings
-    const apolloOptions = {
-        httpEndpoint: config.graphql.httpEndpoint,
-        wsEndpoint: config.graphql.wsEndpoint
+    const dataClientOptions = {
+        httpEndpoint: config.dataGraphQLClient.httpEndpoint,
+        wsEndpoint: config.dataGraphQLClient.wsEndpoint
     };
 
     new Vue({
         el: '#app',
         router,
         store,
-        apolloProvider: createProvider(apolloOptions),
+        apolloProvider: createProvider(authClientOptions, dataClientOptions),
         render: h => h(App)
     });
 });

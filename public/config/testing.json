@@ -1,11 +1,10 @@
 {
     "debug": false,
-    "api": {
-        "url": "https://api.eddy-automl.eddy-analytics.org/api"
+    "authGraphQLClient": {
+        "httpEndpoint": "https://api.eddy-analytics.org/graphql"
     },
-    "graphql": {
-        "enabled": true,
-        "httpEndpoint": "https://localhost:8000/graphql",
-        "wsEndpoint": "wss://subscriptions.eddy-analytics.org/subscriptions"
+    "dataGraphQLClient": {
+        "httpEndpoint": "https://api.eddy-automl.eddy-analytics.org/graphql",
+        "wsEndpoint": "wss://subscriptions.eddy-automl.eddy-analytics.org/subscriptions"
     }
 }
