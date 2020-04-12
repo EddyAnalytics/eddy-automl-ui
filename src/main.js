@@ -21,7 +21,7 @@ api.get('/config/' + configFileName).then(res => {
 
     // Set Apollo clients settings
     const authClientOptions = {
-        httpEndpoint: config.authGraphQLClient.httpEndpoint
+        httpEndpoint: config.dataGraphQLClient.httpEndpoint
     };
 
     const dataClientOptions = {
