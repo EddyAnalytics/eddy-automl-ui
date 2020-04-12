@@ -17,17 +17,20 @@
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 import JobBlock from '@/components/JobBlock.vue';
+import JOBS_QUERY from '@/graphql/queries/jobs.gql';
 
 @Component({
     components: { JobBlock }
 })
 export default class Jobs extends Vue {
-    jobs = [
-        {
-            id: 1,
-            name: 'dsa'
-        }
-    ];
+    jobs = [];
+
+    created() {
+        this.$apollo.addSmartQuery('jobs', {
+            query: JOBS_QUERY,
+            fetchPolicy: 'cache-and-network'
+        });
+    }
 
     addNewJob() {
         this.$router.push({ name: 'NewJob' });

@@ -1,0 +1,8 @@
+query jobs {
+  jobs {
+    id,
+    inputTopic,
+    outputTopic,
+    targetColumn
+  }
+}
