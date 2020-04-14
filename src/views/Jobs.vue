@@ -2,7 +2,7 @@
     <section class="section">
         <h1 class="title">Jobs</h1>
 
-        <div class="columns is-multiline">
+        <div v-if="jobs" class="columns is-multiline">
             <job-block
                 v-for="job in jobs"
                 :key="job.id"
@@ -28,7 +28,10 @@ export default class Jobs extends Vue {
     created() {
         this.$apollo.addSmartQuery('jobs', {
             query: JOBS_QUERY,
-            fetchPolicy: 'cache-and-network'
+            fetchPolicy: 'cache-and-network',
+            result({ data }) {
+                this.jobs = data.jobs.edges.map(edge => edge.node);
+            }
         });
     }
 

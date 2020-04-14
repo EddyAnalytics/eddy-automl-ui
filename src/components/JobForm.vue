@@ -12,7 +12,7 @@
             <b-numberinput v-model="model.targetColumnIndex" min="0"></b-numberinput>
         </b-field>
         <div class="buttons">
-            <button class="button is-primary">Deploy</button>
+            <button class="button is-primary" :disabled="isDisabled">Deploy</button>
             <button class="button" type="button" @click="cancel()">Cancel</button>
         </div>
     </form>
@@ -50,6 +50,10 @@ export default class JobForm extends Vue {
 
     cancel() {
         this.$emit('cancel');
+    }
+
+    get isDisabled() {
+        return !(this.model.inputTopic && this.model.outputTopic);
     }
 }
 </script>

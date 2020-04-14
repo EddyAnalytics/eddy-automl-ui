@@ -8,20 +8,21 @@
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 import JobForm from '@/components/JobForm.vue';
+import CREATE_JOB from '@/graphql/mutations/createJob.gql';
 
 @Component({
     components: { JobForm }
 })
 export default class Jobs extends Vue {
-    jobs = [
-        {
-            id: 1,
-            name: 'dsa'
-        }
-    ];
-
-    saveJob(job) {
-        this.jobs.push(job);
+    async saveJob(job) {
+        job = { ...job, targetColumn: job.targetColumnIndex + '' };
+        await this.$apollo.mutate({
+            mutation: CREATE_JOB,
+            variables: {
+                ...job
+            }
+        });
+        this.$router.replace({ name: 'Jobs' });
     }
 
     cancel() {

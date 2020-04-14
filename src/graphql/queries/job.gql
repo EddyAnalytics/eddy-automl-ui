@@ -1,0 +1,6 @@
+#import "../fragments/jobFragment.gql"
+query job($id: ID!) {
+  job(id: $id) {
+    ...jobFragment
+  }
+}

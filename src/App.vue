@@ -16,12 +16,7 @@ import TheHeader from '@/components/TheHeader';
 @Component({
     components: { TheHeader }
 })
-export default class Job extends Vue {
-    job = {
-        id: 1,
-        name: 'dsa'
-    };
-}
+export default class Job extends Vue {}
 </script>
 
 <style lang="scss">

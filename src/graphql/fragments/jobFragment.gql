@@ -1,0 +1,6 @@
+fragment jobFragment on AutoMLType {
+    id,
+    inputTopic,
+    outputTopic,
+    targetColumn
+}

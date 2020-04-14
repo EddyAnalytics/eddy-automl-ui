@@ -7,7 +7,7 @@
 
             <div class="card-content">
                 <div class="content has-text-centered">
-                    <div>{{ job.name }}</div>
+                    <div>{{ job.name ? job.name : job.id }}</div>
                 </div>
             </div>
         </div>

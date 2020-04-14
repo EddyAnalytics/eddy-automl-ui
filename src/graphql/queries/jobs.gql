@@ -1,8 +1,10 @@
+#import "../fragments/jobFragment.gql"
 query jobs {
-  jobs {
-    id,
-    inputTopic,
-    outputTopic,
-    targetColumn
+  jobs: userJobs {
+      edges {
+          node {
+              ...jobFragment
+          }
+      }
   }
 }
