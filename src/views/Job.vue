@@ -1,18 +1,45 @@
 <template>
-    <section class="section">
-        <h1 class="title">Job</h1>
-        <p>{{ job }}</p>
-    </section>
+    <div>
+        <section class="section">
+            <h1 class="title">Job</h1>
+            <p>
+                <strong>Status:</strong>
+                {{ jobStatus }}
+            </p>
+        </section>
+        <section class="section">
+            <h1 class="subtitle">Job management</h1>
+            <div class="buttons">
+                <b-button icon-left="pencil" @click="showJobConfiguration = !showJobConfiguration">
+                    {{ showJobConfiguration ? 'Hide' : 'Show' }} configuration
+                </b-button>
+                <b-button
+                    v-if="jobStatus == 'running'"
+                    type="is-danger"
+                    outlined
+                    @click="openStopJobModal()"
+                >
+                    Stop job
+                </b-button>
+            </div>
+            <template v-if="showJobConfiguration">
+                <strong>Job configuation</strong>
+                <pre class="sample-event">{{ job }}</pre>
+            </template>
+        </section>
+    </div>
 </template>
 
 <script>
 import { Component, Vue } from 'vue-property-decorator';
 import JOB_QUERY from '@/graphql/queries/job.gql';
+import STOP_JOB from '@/graphql/mutations/stopJob.gql';
 
 @Component({
     components: {}
 })
 export default class Job extends Vue {
+    showJobConfiguration = false;
     jobId = null;
     job = null;
 
@@ -24,6 +51,42 @@ export default class Job extends Vue {
                 id: this.jobId
             }
         });
+    }
+
+    get jobStatus() {
+        if (!this.job) return 'N/A';
+        switch (this.job.status) {
+            case 1:
+                return 'running';
+            case 2:
+                return 'stopped';
+            case -1:
+                return 'failed';
+            default:
+                return 'waiting';
+        }
+    }
+
+    openStopJobModal() {
+        this.$buefy.dialog.confirm({
+            title: 'Stopping job',
+            message: 'Are you sure you want to <b>stop</b> this job?',
+            confirmText: 'Stop',
+            type: 'is-danger',
+            hasIcon: true,
+            onConfirm: () => this.stopJob()
+        });
+    }
+
+    async stopJob() {
+        await this.$apollo.mutate({
+            mutation: STOP_JOB,
+            variables: {
+                jobId: this.jobId
+            }
+        });
+
+        this.$buefy.toast.open('Job stopped');
     }
 }
 </script>

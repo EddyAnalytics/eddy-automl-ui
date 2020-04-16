@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="save()">
         <b-field label="Name">
-            <b-input v-model="model.name" />
+            <b-input v-model="model.jobName" />
         </b-field>
         <topic-selector v-model="model.inputTopic" label="Input topic" />
         <b-field label="Output topic">
@@ -30,7 +30,7 @@ export default class JobForm extends Vue {
     @Prop() job;
 
     model = {
-        name: '',
+        jobName: '',
         inputTopic: '',
         outputTopic: '',
         targetColumnIndex: 0

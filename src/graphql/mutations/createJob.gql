@@ -1,6 +1,6 @@
 #import "../fragments/jobFragment.gql"
-mutation createJob($inputTopic: String!, $outputTopic: String!,  $targetColumn: String!) {
-  createJob: createAutomlJob(inputTopic: $inputTopic, outputTopic: $outputTopic, targetColumn: $targetColumn) {
+mutation createJob($jobName: String!, $inputTopic: String!, $outputTopic: String!,  $targetColumn: Int!) {
+  createJob: createAutomlJob(jobName: $jobName, inputTopic: $inputTopic, outputTopic: $outputTopic, targetColumn: $targetColumn) {
     job {
         ...jobFragment
     }

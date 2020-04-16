@@ -1,0 +1,8 @@
+#import "../fragments/jobFragment.gql"
+mutation stopJob($jobId: String!) {
+  stopJob: stopAutomlJob(jobId: $jobId) {
+    job {
+        ...jobFragment
+    }
+  }
+}

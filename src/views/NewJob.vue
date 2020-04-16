@@ -15,7 +15,7 @@ import CREATE_JOB from '@/graphql/mutations/createJob.gql';
 })
 export default class Jobs extends Vue {
     async saveJob(job) {
-        job = { ...job, targetColumn: job.targetColumnIndex + '' };
+        job = { ...job, targetColumn: job.targetColumnIndex };
         await this.$apollo.mutate({
             mutation: CREATE_JOB,
             variables: {
