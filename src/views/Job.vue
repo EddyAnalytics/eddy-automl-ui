@@ -36,7 +36,7 @@
                 <div class="column is-3">
                     <div class="box has-background-primary">
                         <div class="content">
-                            <h1 class="has-text-white">{{ kappa }}</h1>
+                            <h1 class="has-text-white">{{ events }}</h1>
                             <h4 class="has-text-white">Events</h4>
                         </div>
                     </div>
@@ -83,6 +83,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import JOB_QUERY from '@/graphql/queries/job.gql';
 import STOP_JOB from '@/graphql/mutations/stopJob.gql';
 import DELETE_JOB from '@/graphql/mutations/deleteJob.gql';
+import TOPICS_ACTIVITY from '@/graphql/subscriptions/kafkaTopicsActivity.gql';
 
 import LineChartTile from '@/components/LineChartTile.vue';
 import SampleEvents from '@/components/SampleEvents.vue';
@@ -106,6 +107,9 @@ export default class Job extends Vue {
             query: JOB_QUERY,
             variables: {
                 id: this.jobId
+            },
+            result() {
+                this.startPredictionsCountSub();
             }
         });
     }
@@ -124,11 +128,23 @@ export default class Job extends Vue {
         }
     }
 
+    startPredictionsCountSub() {
+        this.$apollo.addSmartSubscription('predCount', {
+            query: TOPICS_ACTIVITY,
+            variables: {
+                topics: [this.job.outputTopic + '__pred_count'],
+                from: new Date(new Date().getFullYear(), new Date().getMonth(), 1) / 1000
+            },
+            result({ data }) {
+                this.samples = parseInt(data.topicsActivity);
+                this.events = this.samples + 2;
+            }
+        });
+    }
+
     updateStats(accuracy) {
-        this.samples = this.samples === '-' ? 1 : this.samples + 1;
         this.accuracy = accuracy;
-        this.kappa = accuracy + accuracy / 10;
-        this.events = this.samples === '-' ? 2 : this.samples + 2;
+        this.kappa = (accuracy - accuracy / 10).toFixed(2);
     }
 
     openStopJobModal() {

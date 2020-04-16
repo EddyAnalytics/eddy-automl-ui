@@ -1,7 +1,7 @@
 {
     "debug": false,
     "dataGraphQLClient": {
-        "httpEndpoint": "https://api.eddy-analytics.org/graphql",
-        "wsEndpoint": "wss://subscriptions.eddy-analytics.org/subscriptions"
+        "httpEndpoint": "https://eddy-automl-backend.k.eddy-analytics.org/api/graphql",
+        "wsEndpoint": "wss://eddy-automl-subscriptions.k.eddy-analytics.org/subscriptions"
     }
 }
