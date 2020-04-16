@@ -7,18 +7,19 @@
             <strong>password</strong>
         </h2>
         <hr />
+        <form @submit.prevent="login">
+            <b-field label="Email">
+                <b-input v-model="email" type="email" maxlength="30"></b-input>
+            </b-field>
 
-        <b-field label="Email">
-            <b-input v-model="email" type="email" maxlength="30"></b-input>
-        </b-field>
+            <b-field label="Password">
+                <b-input v-model="password" type="password" password-reveal></b-input>
+            </b-field>
 
-        <b-field label="Password">
-            <b-input v-model="password" type="password" password-reveal></b-input>
-        </b-field>
-
-        <b-button type="is-primary" class="m-t-md" @click="login">
-            Log in
-        </b-button>
+            <b-button type="is-primary" native-type="submit" class="m-t-md">
+                Log in
+            </b-button>
+        </form>
     </section>
 </template>
 
