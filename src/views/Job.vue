@@ -21,7 +21,7 @@
                     <div class="box has-background-primary">
                         <div class="content">
                             <h1 class="has-text-white">{{ accuracy }}</h1>
-                            <h4 class="has-text-white">accuracy</h4>
+                            <h4 class="has-text-white">Accuracy</h4>
                         </div>
                     </div>
                 </div>
