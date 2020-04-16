@@ -1,0 +1,6 @@
+mutation deleteJob($jobId: String!) {
+  deleteJob: deleteAutomlJob(jobId: $jobId) {
+    info,
+    status
+  }
+}

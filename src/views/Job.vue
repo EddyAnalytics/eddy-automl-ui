@@ -13,13 +13,11 @@
                 <b-button icon-left="pencil" @click="showJobConfiguration = !showJobConfiguration">
                     {{ showJobConfiguration ? 'Hide' : 'Show' }} configuration
                 </b-button>
-                <b-button
-                    v-if="jobStatus == 'running'"
-                    type="is-danger"
-                    outlined
-                    @click="openStopJobModal()"
-                >
+                <b-button type="is-warning" @click="openStopJobModal()">
                     Stop job
+                </b-button>
+                <b-button type="is-danger" @click="openDeleteJobModal()">
+                    Delete job
                 </b-button>
             </div>
             <template v-if="showJobConfiguration">
@@ -34,6 +32,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import JOB_QUERY from '@/graphql/queries/job.gql';
 import STOP_JOB from '@/graphql/mutations/stopJob.gql';
+import DELETE_JOB from '@/graphql/mutations/deleteJob.gql';
 
 @Component({
     components: {}
@@ -87,6 +86,29 @@ export default class Job extends Vue {
         });
 
         this.$buefy.toast.open('Job stopped');
+    }
+
+    openDeleteJobModal() {
+        this.$buefy.dialog.confirm({
+            title: 'Deletting job',
+            message: 'Are you sure you want to <b>delete</b> this job?',
+            confirmText: 'Delete',
+            type: 'is-danger',
+            hasIcon: true,
+            onConfirm: () => this.deleteJob()
+        });
+    }
+
+    async deleteJob() {
+        await this.$apollo.mutate({
+            mutation: DELETE_JOB,
+            variables: {
+                jobId: this.jobId
+            }
+        });
+
+        this.$buefy.toast.open('Job deleted');
+        this.$router.replace({ name: 'Jobs' });
     }
 }
 </script>
