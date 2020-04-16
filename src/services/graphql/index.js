@@ -84,10 +84,7 @@ export function createProvider(authClientOptions = {}, dataClientOptions = {}) {
 }
 
 // Manually call this when user log in
-export async function onLogin(token) {
-    if (typeof localStorage !== 'undefined' && token) {
-        localStorage.setItem(AUTH_TOKEN, token);
-    }
+export async function onLogin() {
     if (dataClient.wsClient) restartWebsockets(dataClient.wsClient);
     try {
         await dataClient.resetStore();

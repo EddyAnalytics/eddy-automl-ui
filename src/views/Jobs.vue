@@ -29,8 +29,10 @@ export default class Jobs extends Vue {
         this.$apollo.addSmartQuery('jobs', {
             query: JOBS_QUERY,
             fetchPolicy: 'cache-and-network',
-            result({ data }) {
-                this.jobs = data.jobs.edges.map(edge => edge.node);
+            result(res) {
+                if (res && res.data && res.data.jobs) {
+                    this.jobs = res.data.jobs.edges.map(edge => edge.node);
+                }
             }
         });
     }
