@@ -36,8 +36,8 @@
                 <div class="column is-3">
                     <div class="box has-background-primary">
                         <div class="content">
-                            <h1 class="has-text-white">{{ events }}</h1>
-                            <h4 class="has-text-white">Events</h4>
+                            <h1 class="has-text-white">{{ predictions }}</h1>
+                            <h4 class="has-text-white">Predictions</h4>
                         </div>
                     </div>
                 </div>
@@ -47,14 +47,17 @@
         <section v-if="job" class="section">
             <div class="box">
                 <div class="content">
-                    <line-chart-tile :topic="job.outputTopic + '__accuracy'" @value="updateStats" />
+                    <line-chart-tile
+                        :topic="job.outputTopic + '__accuracy'"
+                        @value="updateAccuracyStats"
+                    />
                 </div>
             </div>
         </section>
 
         <section v-if="job" class="section">
             <h1 class="subtitle">Sample predictions</h1>
-            <sample-events :topic="job.outputTopic" />
+            <sample-events :topic="job.outputTopic" @count="updatePredictionsStats" />
         </section>
 
         <section class="section">
@@ -99,7 +102,7 @@ export default class Job extends Vue {
     samples = '-';
     accuracy = '-';
     kappa = '-';
-    events = '-';
+    predictions = '-';
 
     created() {
         this.jobId = this.$route.params.jobId;
@@ -136,13 +139,17 @@ export default class Job extends Vue {
                 from: new Date(new Date().getFullYear(), new Date().getMonth(), 1) / 1000
             },
             result({ data }) {
-                this.samples = parseInt(data.topicsActivity);
-                this.events = this.samples + 2;
+                const samples = parseInt(data.topicsActivity);
+                this.samples = samples > 10 ** 4 ? (samples / 1000).toFixed(1) + 'k' : samples;
             }
         });
     }
 
-    updateStats(accuracy) {
+    updatePredictionsStats(predictions) {
+        this.predictions = predictions;
+    }
+
+    updateAccuracyStats(accuracy) {
         this.accuracy = accuracy;
         this.kappa = (accuracy - accuracy / 10).toFixed(2);
     }

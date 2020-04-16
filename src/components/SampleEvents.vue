@@ -65,6 +65,8 @@ export default class SampleEvents extends Vue {
             result({ data: { sample } }) {
                 this.loading = false;
                 this.samples.push(sample);
+
+                this.$emit('count', this.samples.length);
             }
         });
     }
