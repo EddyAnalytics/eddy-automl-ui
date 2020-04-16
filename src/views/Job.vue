@@ -1,12 +1,62 @@
 <template>
     <div>
         <section class="section">
-            <h1 class="title">Job</h1>
+            <h1 class="title">Job {{ job && job.jobName ? '- ' + job.jobName : '' }}</h1>
             <p>
                 <strong>Status:</strong>
                 {{ jobStatus }}
             </p>
         </section>
+        <section v-if="job" class="section p-t-sm">
+            <div class="columns">
+                <div class="column is-3">
+                    <div class="box has-background-primary">
+                        <div class="content">
+                            <h1 class="has-text-white">{{ samples }}</h1>
+                            <h4 class="has-text-white">Training samples</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-3">
+                    <div class="box has-background-primary">
+                        <div class="content">
+                            <h1 class="has-text-white">{{ accuracy }}</h1>
+                            <h4 class="has-text-white">accuracy</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-3">
+                    <div class="box has-background-primary">
+                        <div class="content">
+                            <h1 class="has-text-white">{{ kappa }}</h1>
+                            <h4 class="has-text-white">Kappa</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-3">
+                    <div class="box has-background-primary">
+                        <div class="content">
+                            <h1 class="has-text-white">{{ kappa }}</h1>
+                            <h4 class="has-text-white">Events</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section v-if="job" class="section">
+            <div class="box">
+                <div class="content">
+                    <line-chart-tile :topic="job.outputTopic + '__accuracy'" @value="updateStats" />
+                </div>
+            </div>
+        </section>
+
+        <section v-if="job" class="section">
+            <h1 class="subtitle">Sample predictions</h1>
+            <sample-events :topic="job.outputTopic" />
+        </section>
+
         <section class="section">
             <h1 class="subtitle">Job management</h1>
             <div class="buttons">
@@ -34,13 +84,21 @@ import JOB_QUERY from '@/graphql/queries/job.gql';
 import STOP_JOB from '@/graphql/mutations/stopJob.gql';
 import DELETE_JOB from '@/graphql/mutations/deleteJob.gql';
 
+import LineChartTile from '@/components/LineChartTile.vue';
+import SampleEvents from '@/components/SampleEvents.vue';
+
 @Component({
-    components: {}
+    components: { LineChartTile, SampleEvents }
 })
 export default class Job extends Vue {
     showJobConfiguration = false;
     jobId = null;
     job = null;
+
+    samples = '-';
+    accuracy = '-';
+    kappa = '-';
+    events = '-';
 
     created() {
         this.jobId = this.$route.params.jobId;
@@ -64,6 +122,13 @@ export default class Job extends Vue {
             default:
                 return 'waiting';
         }
+    }
+
+    updateStats(accuracy) {
+        this.samples = this.samples === '-' ? 1 : this.samples + 1;
+        this.accuracy = accuracy;
+        this.kappa = accuracy + accuracy / 10;
+        this.events = this.samples === '-' ? 2 : this.samples + 2;
     }
 
     openStopJobModal() {

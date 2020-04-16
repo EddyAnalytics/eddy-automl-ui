@@ -4,12 +4,15 @@
             <b-input v-model="model.jobName" />
         </b-field>
         <topic-selector v-model="model.inputTopic" label="Input topic" />
-        <b-field label="Output topic">
-            <b-input v-model="model.outputTopic"></b-input>
+
+        <b-field v-if="model.inputTopic" label="Sample events">
+            <sample-events :topic="model.inputTopic" />
         </b-field>
-        <sample-events :topic="model.inputTopic" />
         <b-field label="Target column index">
             <b-numberinput v-model="model.targetColumnIndex" min="0"></b-numberinput>
+        </b-field>
+        <b-field label="Output topic">
+            <b-input v-model="model.outputTopic"></b-input>
         </b-field>
         <div class="buttons">
             <button class="button is-primary" :disabled="isDisabled">Deploy</button>

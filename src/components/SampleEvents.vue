@@ -1,8 +1,7 @@
 <template>
     <div v-if="topic">
-        <strong>Sample events</strong>
         <div v-if="loading">
-            Loading sample events...
+            Loading...
         </div>
         <div v-else>
             <template v-if="samples.length">
