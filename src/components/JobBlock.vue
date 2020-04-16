@@ -2,7 +2,7 @@
     <article class="column is-narrow">
         <div v-if="job" class="card job-card">
             <div class="card-image">
-                <b-icon icon="database" size="is-large" type="is-grey"></b-icon>
+                <b-icon :icon="jobIcon" size="is-large" type="is-grey"></b-icon>
             </div>
 
             <div class="card-content">
@@ -45,5 +45,19 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class JobBlock extends Vue {
     @Prop() job;
+
+    get jobIcon() {
+        if (!this.job) return 'cloud';
+        switch (this.job.status) {
+            case 1:
+                return 'cloud-check';
+            case 2:
+                return 'cloud-refresh';
+            case -1:
+                return 'cloud-alert';
+            default:
+                return 'cloud-braces';
+        }
+    }
 }
 </script>
