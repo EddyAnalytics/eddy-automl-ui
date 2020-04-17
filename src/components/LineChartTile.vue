@@ -31,7 +31,7 @@ export default class LineChartTile extends Vue {
 
     get chartData() {
         return {
-            // labels: this.labels,
+            labels: this.labels,
             datasets: [
                 {
                     backgroundColor: this.DEFAULT_COLORS[0],
@@ -59,13 +59,14 @@ export default class LineChartTile extends Vue {
         };
     }
 
+    i = 0;
     created() {
+        this.i = 0;
         this.subscribeToData();
         this.subscribeToSampleData();
     }
 
     subscribeToData() {
-        let i = 0;
         this.$apollo.addSmartSubscription('chartData', {
             query: TOPICS_ACTIVITY,
             variables: {
@@ -73,9 +74,9 @@ export default class LineChartTile extends Vue {
                 from: new Date(new Date().getFullYear(), new Date().getMonth(), 1) / 1000
             },
             result({ data }) {
-                i += 1;
-                if (i % 100 != 0) return;
-                const label = new Date();
+                this.i += 1;
+                if (this.i % 1000 != 0) return;
+                const label = this.i;
                 const point = parseFloat(data.topicsActivity).toFixed(2);
                 this.$emit('value', point);
 
@@ -108,7 +109,9 @@ export default class LineChartTile extends Vue {
                 };
             },
             result({ data: { sample } }) {
-                const label = new Date();
+                this.i += 1;
+                if (this.i < 10 && this.i % 1000 != 0) return;
+                const label = this.i;
                 const point = parseFloat(sample).toFixed(2);
 
                 this.$emit('value', point);
