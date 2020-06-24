@@ -18,11 +18,13 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: Yarn install
+      - name: Install yarn dependencies
         run: yarn install
-      - name: Unit tests
+      - name: Run unit tests
         run: yarn run test:unit
-      - name: Build app
+      - name: Run E2E tests
+        run: yarn run test:e2e
+      - name: Build application
         run: yarn run build
       - name: Build Docker image
         run: docker build . -t eddyanalytics/eddy-automl-ui
