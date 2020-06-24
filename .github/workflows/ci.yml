@@ -27,7 +27,7 @@ jobs:
       - name: Build application
         run: yarn run build
       - name: Build Docker image
-        run: docker build . -t eddyanalytics/eddy-automl-ui
+        run: docker build . -t eddyanalytics/eddy-automl-ui:${GITHUB_REF##*/}
       - name: Push Docker image
         run: |
           echo '${{ secrets.CI_REGISTRY_TOKEN }}' | docker login --username eddyanalytics --password-stdin
