@@ -10,9 +10,21 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
+
+Cypress.Commands.add('login', () => {
+    const mockedBody = JSON.parse(
+        '{"operationName":"login","variables":{"username":"demo@demo.com","password":"demo"},"query":"mutation login($username: String!, $password: String!) {\\n  tokenAuth(username: $username, password: $password) {\\n    token\\n    __typename\\n  }\\n}\\n"}'
+    );
+
+    cy.request({
+        method: 'POST',
+        url: 'https://eddy-automl-backend.k.eddy-analytics.org/api/graphql',
+        body: mockedBody
+    }).then(resp => {
+        window.localStorage.setItem('eddy-automl-ui-token', resp.body.data.tokenAuth.token);
+    });
+});
+
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
 //
