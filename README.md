@@ -1,5 +1,4 @@
-# eddy-automl-ui
-
+# Eddy AutoML UI
 > Eddy AutoML is an automated machine learning platform for streaming data. Part of the Eddy Analytics Platform.
 
 User interface for the Eddy AutoML service. Used for scheduling, managing and monitoring AutoML jobs.
