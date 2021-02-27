@@ -4,6 +4,8 @@
 
 User interface for the Eddy AutoML service. Used for scheduling, managing and monitoring AutoML jobs.
 
+The AutoML UI is an SPA written in Vue.js. It solely uses the Apollo GraphQL client to communicate with other services which are the Kafka GraphQL bridge and the backend service. It uses WebSockets and GraphQL subscriptions to communicate the Kafka GraphQL bridge in order to get available Kafka topics for data streaming and real-time machine learning statistics to use in a AutoML Job interface. Authentication and meta-information about the job are also done through GraphQL by communicating with the backend service.
+
 ## Project setup
 ```
 yarn install
