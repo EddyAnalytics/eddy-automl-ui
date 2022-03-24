@@ -10,7 +10,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@mdi/font": "^5.0.45",
+    "@mdi/font": "^6.6.95",
     "axios": "^0.19.2",
     "buefy": "^0.8.13",
     "chart.js": "^2.9.3",
