@@ -1415,10 +1415,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@mdi/font@^5.0.45":
-  version "5.3.45"
-  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-5.3.45.tgz#086d3ef77dee260c04dd5a593af602c250e5b315"
-  integrity sha512-SD5d2vHEKRvDCInZQFXOwiFpBlzpuZOiqwxKf6E+zCt7UDc52TUSrL0+TXqY57VQh/SnTpZVXM+Uvs21OdPFWg==
+"@mdi/font@^6.8.96":
+  version "6.8.96"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-6.8.96.tgz#e8e2f2eebdaec769c2c41cde6912d1066f81df78"
+  integrity sha512-SXNgfE9BdaaKZOJjb9vDhXbJOWJD8Zjqjf352dcFzOkPnBR9piVAvIH7ZtG08B2DI1l4swe7m9F2aPGmH1X20g==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
